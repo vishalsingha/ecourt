@@ -1,5 +1,3 @@
-
-
 # URL of the webpage containing the table
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -7,6 +5,7 @@ import os
 import time
 from selenium.webdriver.common.by import By
 import csv
+import sys
 
 # Define download directory
 download_dir = os.path.join(os.getcwd(), 'downloads')
@@ -23,13 +22,16 @@ chrome_options.add_experimental_option("prefs", {
 # Initialize Chrome WebDriver
 driver = webdriver.Chrome(options=chrome_options)
 
-YEAR = 2021
-url = f"https://dhcbkp.nic.in/FreeText/{YEAR}.html"
+# Check if the year argument is provided
+if len(sys.argv) < 2:
+    print("Please provide the year as an argument.")
+    sys.exit(1)
 
+YEAR = int(sys.argv[1])
+url = f"https://dhcbkp.nic.in/FreeText/{YEAR}.html"
 
 # Navigate to the webpage with the file to download
 driver.get(url)
-
 
 table = driver.find_element(By.TAG_NAME, 'table')
 
